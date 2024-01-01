@@ -1,19 +1,19 @@
 import { Controller, Post } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private prisma: PrismaService) {}
 
   // auth/signup
   @Post('signup')
   signUp() {
-    return this.authService.signup();
+    return 'signup';
   }
   // auth/login
   @Post('login')
   login() {
-    return this.authService.login();
+    return 'login';
   }
 }
 // Path: src/auth/auth.service.ts
