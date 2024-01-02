@@ -1,19 +1,19 @@
-import { Controller, Post } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { Body, Controller, Post } from '@nestjs/common';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private auth: AuthService) {}
 
-  // auth/signup
   @Post('signup')
-  signUp() {
-    return 'signup';
+  signUp(@Body('email') email: string, @Body('password') password: string) {
+    console.log(email, password);
+    return this.auth.signup();
   }
-  // auth/login
+
   @Post('login')
-  login() {
-    return 'login';
+  login(@Body('email') email: string, @Body('password') password: string) {
+    console.log(email, password);
+    return this.auth.login();
   }
 }
-// Path: src/auth/auth.service.ts
