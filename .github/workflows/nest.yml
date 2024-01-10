@@ -26,4 +26,5 @@ jobs:
         with:
           node-version: 16
       - run: npm install
+      - run: npm install -g @nestjs/cli
       - run: npm run build
