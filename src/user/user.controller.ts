@@ -8,6 +8,11 @@ import { UserService } from './user.service';
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
+
+  @Get()
+  geaAll() {
+    return this.userService.getAll();
+  }
   @UseGuards(JwtGuard)
   @Get('me')
   getMe(@GetUser() user: User) {

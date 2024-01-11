@@ -8,7 +8,9 @@ import { Injectable } from '@nestjs/common';
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
-  // 他のメソッド
+  async getAll(): Promise<User[]> {
+    return this.prisma.user.findMany();
+  }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     return this.prisma.user.update({
