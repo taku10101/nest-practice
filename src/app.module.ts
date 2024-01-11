@@ -5,6 +5,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { BookmarkModule } from './bookmark/bookmark.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { UserController } from './user/user.controller';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -15,7 +16,7 @@ import { ConfigModule } from '@nestjs/config';
     BookmarkModule,
     AuthModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, UserController],
   providers: [AppService],
 })
 export class AppModule {}

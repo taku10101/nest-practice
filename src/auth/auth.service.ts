@@ -4,6 +4,7 @@ import * as argon from 'argon2';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 @Injectable()
 export class AuthService {
   constructor(
@@ -13,25 +14,27 @@ export class AuthService {
   ) {}
 
   async signup(dto: AuthDto) {
+    // generate the password hash
     const hash = await argon.hash(dto.password);
-    //prismaで
-    const user = await this.prisma.user.create({
-      data: {
-        email: dto.email,
-        hash,
-      },
-      //特定のフィールドのみを取得する場合はselectを使用する
-      // select: {
-      //   id: true,
-      //   email: true,
-      //   hash: true,
-      // },
-    });
+    // save the new user in the db
+    try {
+      const user = await this.prisma.user.create({
+        data: {
+          email: dto.email,
+          hash,
+        },
+      });
 
-    delete user.hash;
-    return user;
+      return this.signToken(user.id, user.email);
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2002') {
+          throw new ForbiddenException('Credentials taken');
+        }
+      }
+      throw error;
+    }
   }
-
   async login(dto: AuthDto) {
     const user = await this.prisma.user.findUnique({
       where: {
