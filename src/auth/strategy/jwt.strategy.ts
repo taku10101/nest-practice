@@ -33,3 +33,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     return user;
   }
 }
+//JwtStrategy: これはPassport.jsの認証ストラテジーの一つで、JWT（JSON Web Tokens）を使用した認証を行います。
+//このストラテジーは、受信したJWTが有効であることを確認し、そのペイロード（通常はユーザー情報）をリクエストオブジェクトに添付します。
+//JwtStrategyは、具体的にはJWTの署名の検証と、署名が有効であればペイロードの解析を行います。
