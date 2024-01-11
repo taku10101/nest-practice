@@ -8,6 +8,6 @@ export class UserController {
   getMe(@Req() req: Request) {
     console.log(req.user);
 
-    return 'Hello World';
+    return req.user;
   }
 }
