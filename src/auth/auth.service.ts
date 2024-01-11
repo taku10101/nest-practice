@@ -38,7 +38,7 @@ export class AuthService {
     }
 
     //argon2のverifyメソッドでパスワードの照合を行う
-    const pwMatch = await argon.verify((await user).hash, dto.password); //hashとパスワードが一致しているかどうかを返す
+    const pwMatch = await argon.verify((await user).hash, dto.password);
     if (!pwMatch) {
       throw new ForbiddenException('ログインに失敗しました');
     }
