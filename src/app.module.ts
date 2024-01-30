@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
-import { BookmarkModule } from './bookmark/bookmark.module';
-import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { UserController } from './user/user.controller';
-import { UserService } from './user/user.service';
+import { UserServiceModule } from './service/user-service/user-service.module';
+import { AuthServiceModule } from './service/auth-service/auth-service.module';
+import { AuthControllerModule } from './controller/auth-controller/auth-controller.module';
+import { UserControllerModule } from './controller/user-controller/user-controller.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -14,10 +15,12 @@ import { UserService } from './user/user.service';
       envFilePath: '.env',
     }),
     PrismaModule,
-    BookmarkModule,
-    AuthModule,
+    UserServiceModule,
+    AuthServiceModule,
+    AuthControllerModule,
+    UserControllerModule,
   ],
-  controllers: [AppController, UserController],
-  providers: [AppService, UserService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
